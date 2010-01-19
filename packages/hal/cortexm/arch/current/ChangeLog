@@ -1,0 +1,89 @@
+2009-02-27  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/hal_io.h: Added system control register definitions 
+
+2009-02-13  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/hal_arch.h: Add include for var_arch.h.
+	(HAL_IDLE_THREAD_ACTION): Tidy up debug code left in by mistake.
+
+2009-02-07  Chris Holgate  <chris@zynaptic.com>
+
+	* src/hal_misc.c:
+	* src/cortexm.ld: 
+	Modified SRAM linker section to support initialisation from ROM.
+
+2008-12-03  Nick Garnett  <nickg@ecoscentric.com>
+
+	* src/hal_misc.c (hal_deliver_interrupt): Fix instrumentation call
+	to allow it to compile properly.
+
+2008-11-24  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/hal_io.c: Fixed MASK_ macro.
+
+2008-11-04  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/hal_intr.h:
+	Fixed load value of SysTick counter.
+	* src/hal_misc.c:
+	Fixed wrap-around in hal_delay_us().
+
+2008-11-04  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/hal_intr.h:
+	Fixed base address in reset function.
+
+2008-10-16  Nick Garnett  <nickg@ecoscentric.com>
+
+	* src/vectors.S: 
+	* src/hal_misc.c: Tidy some comments and code.
+
+2008-10-10  Nick Garnett  <nickg@ecoscentric.com>
+
+	* src/hal_misc.c (hal_deliver_interrupt): Add support for chained
+	interrupts.
+	(hal_interrupt_end): Only increment scheduler lock when the kernel
+	is present.
+
+	* include/hal_arch.h (HAL_THREAD_INIT_CONTEXT): Add end-stop to
+	new thread states to terminate GDB backtraces.
+
+2008-10-06  Nick Garnett  <nickg@ecoscentric.com>
+
+	* hal_cortexm.cdl:
+	* include/basetype.h:
+	* include/hal_arch.h:
+	* include/hal_intr.h:
+	* include/hal_io.h:
+	* include/cortex_stub.h:
+	* src/vectors.S:
+	* src/context.S:
+	* src/cortexm.ld:
+	* src/cortexm_stub.c:
+	* src/hal_misc.c:
+	New package -- Cortex-M architecture HAL.
+
+//===========================================================================
+// ####GPLCOPYRIGHTBEGIN####                                                
+// -------------------------------------------                              
+// This file is part of eCos, the Embedded Configurable Operating System.   
+// Copyright (C) 2008 Free Software Foundation, Inc.                        
+//
+// This program is free software; you can redistribute it and/or modify     
+// it under the terms of the GNU General Public License as published by     
+// the Free Software Foundation; either version 2 or (at your option) any   
+// later version.                                                           
+//
+// This program is distributed in the hope that it will be useful, but      
+// WITHOUT ANY WARRANTY; without even the implied warranty of               
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        
+// General Public License for more details.                                 
+//
+// You should have received a copy of the GNU General Public License        
+// along with this program; if not, write to the                            
+// Free Software Foundation, Inc., 51 Franklin Street,                      
+// Fifth Floor, Boston, MA  02110-1301, USA.                                
+// -------------------------------------------                              
+// ####GPLCOPYRIGHTEND####                                                  
+//===========================================================================

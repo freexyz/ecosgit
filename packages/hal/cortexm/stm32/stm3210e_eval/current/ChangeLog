@@ -1,0 +1,92 @@
+2009-02-04  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_rom.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_ram.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_jtag.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_sram.ldi:
+	Add .sram section to linker scripts.
+
+2009-02-07  Chris Holgate  <chris@zynaptic.com>
+
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_rom.ldi:
+	Modified SRAM section so that initialisation data is placed in ROM.
+
+2009-01-31  Bart Veer <bartv@ecoscentric.com>
+
+	* cdl/hal_cortexm_stm32_stm3210e_eval.cdl: update compiler flags for gcc 4.x
+
+2008-12-10  Nick Garnett  <nickg@ecoscentric.com>
+
+	* cdl/hal_cortexm_stm32_stm3210e_eval.cdl: Switch value for
+	CYGHWR_MEMORY_LAYOUT to calculated, so that changes to startup
+	type are correctly propagated.
+
+2008-11-20  Jonathan Larmour  <jifl@eCosCentric.com>
+
+	* cdl/hal_cortexm_stm32_stm3210e_eval.cdl: Remove doc link
+	to doc that doesn't exist.
+
+2008-11-19  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_ram.ldi (hal_startup_stack):
+	Adjust initial stack to top of external SRAM.
+
+2008-10-10  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_rom.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_rom.h:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_ram.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_ram.h:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_jtag.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_jtag.h:	
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_sram.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_sram.h:
+	Update RAM/SRAM upper limits to account for interrupt/init
+	stack.
+
+	* src/stm3210e_eval_flash.c: Use generic null functions for
+	external flash lock operations.
+
+2008-10-06  Nick Garnett  <nickg@ecoscentric.com>
+
+	* cdl/hal_cortexm_stm32_stm3210e_eval.cdl:
+	* include/plf_arch.h:
+	* include/plf_intr.h:
+	* include/plf_io.h:
+	* src/stm3210e_eval_misc.c:
+	* src/stm3210e_eval_flash.c:
+	* misc/redboot_ROM.ecm:
+	* misc/redboot_JTAG.ecm:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_rom.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_rom.h:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_ram.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_ram.h:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_jtag.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_jtag.h:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_sram.ldi:
+	* include/pkgconf/mlt_cortexm_stm3210e_eval_sram.h:
+	New package -- ST STM3210E EVAL board HAL.
+	
+//===========================================================================
+// ####GPLCOPYRIGHTBEGIN####                                                
+// -------------------------------------------                              
+// This file is part of eCos, the Embedded Configurable Operating System.   
+// Copyright (C) 2008, 2009 Free Software Foundation, Inc.                        
+//
+// This program is free software; you can redistribute it and/or modify     
+// it under the terms of the GNU General Public License as published by     
+// the Free Software Foundation; either version 2 or (at your option) any   
+// later version.                                                           
+//
+// This program is distributed in the hope that it will be useful, but      
+// WITHOUT ANY WARRANTY; without even the implied warranty of               
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        
+// General Public License for more details.                                 
+//
+// You should have received a copy of the GNU General Public License        
+// along with this program; if not, write to the                            
+// Free Software Foundation, Inc., 51 Franklin Street,                      
+// Fifth Floor, Boston, MA  02110-1301, USA.                                
+// -------------------------------------------                              
+// ####GPLCOPYRIGHTEND####                                                  
+//===========================================================================

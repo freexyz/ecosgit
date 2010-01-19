@@ -1,0 +1,124 @@
+2009-10-26  Ross Younger  <wry@ecoscentric.com>
+
+	* include/var_io.h: Minor corrections to the FSMC register defs.
+
+2009-08-10  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/var_io.h: Added more register definitions for FSMC
+
+2009-04-17  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* src/hal_diag.c (hal_stm32_serial_getc_timeout): Fix for higher
+	baudrates. The original version lost bytes due to the long
+	timeout.
+
+2009-02-27  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/var_io.h:
+	Add mask for CYGHWR_HAL_STM32_RCC_CFGR_ADCPRE.
+	Fixed CYGHWR_HAL_STM32_RTC_CRL_ALRF.
+	Add register definitions for ADC.
+	Add additional timer registers.
+	* src/stm32_mis.c:
+	Moved system clock initialization into it's own function, so it can
+	be called after wakeup from sleep modes.
+	Added hal_stm32_timer_clock() to get current clock of timers.
+
+2009-02-10  Chris Holgate  <chris@zynaptic.com>
+
+	* include/var_io.h: Add mask for CYGHWR_HAL_STM32_AFIO_MAPR_SWJ.
+
+2009-02-04  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/var_intr.h: Various fixes to allow external interrupts
+	to work.
+
+	* include/var_io.h: Add AFIO, DMA, SPI and USB definitions.
+
+	* src/stm32_misc.c (hal_stm32_gpio_set): Refetch bit number for
+	setting pullup/down.
+
+2008-11-24  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/var_intr.h (CYGNUM_HAL_INTERRUPT_DMA1_CHX): Rename DMA0
+	to DMA1 to match ST's numbering elsewhere.
+
+	* include/var_io.h (CYGHWR_HAL_STM32_GPIO_CFG): Remove PULLUP bit
+	from mask. Previous addition was incorrect.
+
+2008-11-24  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/var_io.h: Corrected capitalisation.
+	
+2008-11-12  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* include/var_io.h: Changed CYGHWR_HAL_STM32_BD_UNPROTECT to
+	CYGHWR_HAL_STM32_BD_PROTECT, inverting the argument.
+	* src/stm32_misc.c: Changed hal_stm32_bd_unprotect() to
+	hal_stm32_bd_protect(), inverting the argument.
+
+2008-11-11  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/var_io.h: Add power control definitions.
+
+	* src/stm32_misc.c (hal_stm32_bd_unprotect): Add this function to
+	control backup domain write protection.
+
+2008-10-14  Nick Garnett  <nickg@ecoscentric.com>
+
+	* tests/timers.c: Add ifdefs to avoid compiling tests when not all
+	packages or components are present.
+
+2008-10-10  Nick Garnett  <nickg@ecoscentric.com>
+
+	* cdl/hal_cortexm_stm32.cdl: Only build tests if the kernel is present.
+
+	* include/var_io.h (CYGHWR_HAL_STM32_GPIO_CFG): Add PULLUP bit to mask.
+
+	* tests/timers.c (timers_test): Terminate with PASS_FINISH rather
+	than just FINISH.
+
+2008-10-08  Nick Garnett  <nickg@ecoscentric.com>
+
+	* include/var_intr.h (CYGNUM_HAL_ISR_MAX, CYGNUM_HAL_VSR_MAX): Fix
+	definition of these values.
+
+	* tests/timers.c: Fix to run for maximum duration of 2 minutes.
+
+2008-10-06  Nick Garnett  <nickg@ecoscentric.com>
+
+	* cdl/hal_cortexm_stm32.cdl:
+	* include/variant.inc:
+	* include/var_arch.h:
+	* include/var_intr.h:
+	* include/var_io.h:
+	* include/hal_cache.h:
+	* include/hal_diag.h:
+	* include/plf_stub.h:
+	* src/hal_diag.c:
+	* src/stm32_misc.c:
+	New package -- ST STM32 variant HAL.	
+	
+//===========================================================================
+// ####GPLCOPYRIGHTBEGIN####                                                
+// -------------------------------------------                              
+// This file is part of eCos, the Embedded Configurable Operating System.   
+// Copyright (C) 2008, 2009 Free Software Foundation, Inc.                        
+//
+// This program is free software; you can redistribute it and/or modify     
+// it under the terms of the GNU General Public License as published by     
+// the Free Software Foundation; either version 2 or (at your option) any   
+// later version.                                                           
+//
+// This program is distributed in the hope that it will be useful, but      
+// WITHOUT ANY WARRANTY; without even the implied warranty of               
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        
+// General Public License for more details.                                 
+//
+// You should have received a copy of the GNU General Public License        
+// along with this program; if not, write to the                            
+// Free Software Foundation, Inc., 51 Franklin Street,                      
+// Fifth Floor, Boston, MA  02110-1301, USA.                                
+// -------------------------------------------                              
+// ####GPLCOPYRIGHTEND####                                                  
+//===========================================================================

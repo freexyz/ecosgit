@@ -1,0 +1,48 @@
+2009-04-06  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* src/stm32_flash.c:
+	stm32_flash_get_block_info() now computes correct block base
+	address. HSI is enabled for flash erase/program as stated in the
+	manual. Some cleanup.
+
+2008-12-19  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* src/stm32_flash.c:
+	Hardcoded flash and block sizes as the debug registers are not
+	readable by user software.
+
+2008-11-04  Simon Kallweit  <simon.kallweit@intefo.ch>
+
+	* src/stm32_flash.c:
+	Fixed detection on early silicon.
+
+2008-10-07  Nick Garnett  <nickg@ecoscentric.com>
+
+	* cdl/flash_stm32.cdl:
+	* include/stm32_flash.h:
+	* src/stm32_flash.c:
+	New package -- support for STM32 on-chip flash.
+
+//===========================================================================
+// ####GPLCOPYRIGHTBEGIN####                                                
+// -------------------------------------------                              
+// This file is part of eCos, the Embedded Configurable Operating System.   
+// Copyright (C) 2008 Free Software Foundation, Inc.                        
+//
+// This program is free software; you can redistribute it and/or modify     
+// it under the terms of the GNU General Public License as published by     
+// the Free Software Foundation; either version 2 or (at your option) any   
+// later version.                                                           
+//
+// This program is distributed in the hope that it will be useful, but      
+// WITHOUT ANY WARRANTY; without even the implied warranty of               
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU        
+// General Public License for more details.                                 
+//
+// You should have received a copy of the GNU General Public License        
+// along with this program; if not, write to the                            
+// Free Software Foundation, Inc., 51 Franklin Street,                      
+// Fifth Floor, Boston, MA  02110-1301, USA.                                
+// -------------------------------------------                              
+// ####GPLCOPYRIGHTEND####                                                  
+//===========================================================================
