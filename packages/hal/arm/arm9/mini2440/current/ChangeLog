@@ -1,0 +1,23 @@
+2009-12-25  T.C. Chiu <TCChiu@sq.com.tw>
+
+	* cdl/hal_arm_arm9_mini2440.cdl:
+
+	* include/hal_platform_ints.h:
+	* include/hal_platform_setup.h:
+	* include/plf_io.h:
+	* include/mini2440.h:
+
+	* include/pkgconf/mlt_arm_arm9_mini2440_ram.h:
+	* include/pkgconf/mlt_arm_arm9_mini2440_ram.ldi:
+	* include/pkgconf/mlt_arm_arm9_mini2440_rom.h:
+	* include/pkgconf/mlt_arm_arm9_mini2440_rom.ldi:
+	* include/pkgconf/mlt_arm_arm9_mini2440_romram.h:
+	* include/pkgconf/mlt_arm_arm9_mini2440_romram.ldi:
+
+	* misc/redboot_RAM.ecm:
+	* misc/redboot_ROMRAM.ecm:
+
+	* src/mini2440_misc.c:
+	New package for the FriendlyARM MINI2440 development board.
+
+

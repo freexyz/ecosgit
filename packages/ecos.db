@@ -1046,6 +1046,15 @@ package CYGPKG_IO_SERIAL_ARM_SMDK2410 {
     description       "Samsung ARM9/SMDK2410 board serial device drivers"
 }
 
+package CYGPKG_IO_SERIAL_ARM_S3C2440X {
+    alias             { "Samsung ARM9/S3C2440X chipset serial device drivers"
+                        devs_serial_arm_s3c2440x s3c2440x_serial_driver }
+    hardware
+    directory         devs/serial/arm/s3c2440x
+    script            ser_arm_s3c2440x.cdl
+    description       "Samsung ARM9/S3C2440X serial device drivers"
+}
+
 package CYGPKG_IO_SERIAL_ARM_EDB7XXX {
     alias             { "Cirrus Logic ARM based board serial device drivers"
                         devs_serial_arm_edb7xxx edb7xxx_serial_driver }
@@ -3074,6 +3083,16 @@ package CYGPKG_HAL_ARM_ARM9_SMDK2410 {
         description "
         The SMDK2410 HAL package provides the support needed to run
         eCos on Samsung SMDK2410 and S3c2410x (ARM9) based development boards."
+}
+
+package CYGPKG_HAL_ARM_ARM9_S3C2440X {
+        alias           { "Samsung ARM9/S3C2440X Chipset" hal_arm_arm9_s3c2440x }
+        directory       hal/arm/arm9/s3c2440x
+        script          hal_arm_arm9_s3c2440x.cdl
+        hardware
+        description "
+        The S3C2440X HAL package provides the support needed to run
+        eCos on a Samsung ARM9/S3C2440X based systems."
 }
 
 package CYGPKG_HAL_ARM_ARM9_INNOVATOR {
@@ -6426,6 +6445,60 @@ target picasso {
         description "
         The picasso target provides the packages needed to run
         eCos on an NMI uEngine picasso board."
+}
+
+# --------------------------------------------------------------------------
+# Support Samsung ARM9/S3C2440X
+
+#                   CYGPKG_DEVS_FLASH_TOSHIBA_TC58XXX
+
+package CYGPKG_DEVS_FLASH_ARM_MINI2440 {
+        alias           { "FLASH memory support for FriendlyARM MINI2440" flash_mini2440 }
+        directory       devs/flash/arm/mini2440
+        script          flash_mini2440.cdl
+        hardware
+        description "
+            This package contains hardware support for FLASH memory
+            on the FriendlyARM MINI2440 development boards. (Samsung ARM9/S3C2440X)"
+}
+
+package CYGPKG_DEVS_ETH_ARM_MINI2440 {
+        alias           { "FriendlyARM MINI2440 with DM9000 ethernet driver"
+                          devs_eth_arm_mini2440 mini2440_eth_driver }
+        hardware
+        directory	devs/eth/arm/mini2440
+        script		mini2440_eth_driver.cdl
+        description     "
+            Ethernet driver for FriendlyARM MINI2440 with Davicom DM9000
+            ethernet interface."
+}
+
+package CYGPKG_HAL_ARM_ARM9_MINI2440 {
+        alias           { "FriendlyARM MINI2440 development board" hal_arm_arm9_mini2440 }
+        directory       hal/arm/arm9/mini2440
+        script          hal_arm_arm9_mini2440.cdl
+        hardware
+        description "
+            The MINI2440 HAL package provides the support needed to run
+            eCos on FriendlyARM MINI2440 development boards. (Samsung ARM9/S3C2440X)"
+}
+
+target mini2440 {
+        alias { "FriendlyARM MINI2440 development board" s3c2440x }
+        packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_ARM9
+                   CYGPKG_HAL_ARM_ARM9_S3C2440X
+                   CYGPKG_HAL_ARM_ARM9_MINI2440
+                   CYGPKG_DEVS_FLASH_ARM_MINI2440
+                   CYGPKG_DEVS_ETH_ARM_MINI2440
+                   CYGPKG_IO_SERIAL_ARM_S3C2440X
+                   CYGPKG_DEVS_FLASH_AMD_AM29XXXXX
+                   CYGPKG_DEVS_FLASH_SST_39VFXXX
+                   CYGPKG_DEVS_ETH_DAVICOM_DM9000
+        }
+        description "
+            The MINI2440 target provides the packages needed to run eCos on
+            FriendlyARM MINI2440 development boards. (Samsung ARM9/S3C2440X)"
 }
 
 # --------------------------------------------------------------------------

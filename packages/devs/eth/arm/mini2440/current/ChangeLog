@@ -1,0 +1,8 @@
+2009-12-28  T.C. Chiu <TCChiu@sq.com.tw>
+
+	* cdl/mini2440_eth_driver.cdl:
+
+	* include/devs_eth_arm_mini2440.inl:
+	New package to support the ethernet device on a FriendlyARM MINI2440 
+	based development board.
+

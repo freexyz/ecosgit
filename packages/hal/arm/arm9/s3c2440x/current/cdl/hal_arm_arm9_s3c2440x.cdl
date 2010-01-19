@@ -1,0 +1,194 @@
+# ====================================================================
+#
+#      hal_arm_arm9_s3c2440x.cdl
+#
+#      Samsung S3C2440x platform HAL package configuration data
+#
+# ====================================================================
+## ####ECOSGPLCOPYRIGHTBEGIN####
+## -------------------------------------------
+## This file is part of eCos, the Embedded Configurable Operating System.
+## Copyright (C) 2009 Free Software Foundation, Inc.
+##
+## eCos is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free
+## Software Foundation; either version 2 or (at your option) any later
+## version.
+##
+## eCos is distributed in the hope that it will be useful, but WITHOUT
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+## for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with eCos; if not, write to the Free Software Foundation, Inc.,
+## 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+##
+## As a special exception, if other files instantiate templates or use
+## macros or inline functions from this file, or you compile this file
+## and link it with other works to produce a work based on this file,
+## this file does not by itself cause the resulting work to be covered by
+## the GNU General Public License. However the source code for this file
+## must still be made available in accordance with section (3) of the GNU
+## General Public License v2.
+##
+## This exception does not invalidate any other reasons why a work based
+## on this file might be covered by the GNU General Public License.
+## -------------------------------------------
+## ####ECOSGPLCOPYRIGHTEND####
+# ====================================================================
+######DESCRIPTIONBEGIN####
+#
+# Author(s):	T.C. Chiu <TCChiu@sq.com.tw>
+# Contributors:	T.C. Chiu <TCChiu@sq.com.tw>
+# Date:		2009-12-24
+#
+#####DESCRIPTIONEND####
+#
+# ====================================================================
+
+cdl_package CYGPKG_HAL_ARM_ARM9_S3C2440X {
+	display		"Samsung ARM9/S3C2440X Chipset"
+	parent		CYGPKG_HAL_ARM_ARM9
+	requires	CYGPKG_HAL_ARM_ARM9_ARM920T
+	hardware
+	include_dir	cyg/hal
+	define_header	hal_arm_arm9_s3c2440x.h
+	description	"
+		The S3C2440X HAL package provides the support needed to run eCos on
+		Samsung S3C2440X (ARM920T) based boards."
+
+	compile		s3c2440x_misc.c hal_diag.c
+
+	implements	CYGINT_HAL_ARM_ARM9_S3C2440X
+	implements	CYGINT_HAL_VIRTUAL_VECTOR_COMM_BAUD_SUPPORT
+
+	define_proc {
+		puts $::cdl_header "/***** package proc output start *****/"
+		puts $::cdl_header "#define CYGBLD_HAL_VAR_INTS_H	<cyg/hal/hal_var_ints.h>"
+		puts $::cdl_header "#define CYGBLD_HAL_VAR_H		<cyg/hal/hal_s3c2440x.h>"
+		puts $::cdl_header "/***** package proc output end *****/"
+	}
+
+	# Both PLLs are in bypass mode on startup.
+	# FIXME: Add proper configury
+	cdl_component CYGNUM_HAL_ARM_S3C2440X_CPU_CLOCK {
+		display		"CPU speed (FCLK)"
+		flavor		data
+		legal_values	200000000 400000000
+		default_value	{ 400000000 }
+		description	"
+			This is the actual CPU operating frequency (FCLK)."
+
+		cdl_option CYGNUM_HAL_ARM_S3C2440X_AHB_CLOCK {
+			display		"AHB bus speed (HCLK)"
+			flavor		data
+			calculated	{ CYGNUM_HAL_ARM_S3C2440X_CPU_CLOCK / 4 }
+			description	"
+				This is the AHB bus operating frequency (HCLK)."
+		}
+
+		cdl_option CYGNUM_HAL_ARM_S3C2440X_APB_CLOCK {
+			display		"APB bus speed (PCLK)"
+			flavor		data
+			calculated	{ CYGNUM_HAL_ARM_S3C2440X_CPU_CLOCK / 8 }
+			description	"
+			This is the APB bus operating frequency (PCLK)."
+		}
+
+		cdl_option CYGNUM_HAL_ARM_S3C2440X_TIMER_PRESCALE {
+			display		"Timer prescale"
+			flavor		data
+			legal_values	0 to 255
+			default_value	16
+			description	"
+				This is the prescale value used on the clock used to drive
+				the kernel counter. Note that some parts of the code may fail
+				if this is changed due to over/underflows of expressions."
+		}
+	}
+
+	# Real-time clock/counter specifics
+	cdl_component CYGNUM_HAL_RTC_CONSTANTS {
+		display		"Real-time clock constants"
+		flavor		none
+		no_define
+
+		cdl_option CYGNUM_HAL_RTC_NUMERATOR {
+			display		"Real-time clock numerator"
+			flavor		data
+			calculated	1000000000
+		}
+		cdl_option CYGNUM_HAL_RTC_DENOMINATOR {
+			display		"Real-time clock denominator"
+			flavor		data
+			calculated	100
+		}
+		cdl_option CYGNUM_HAL_RTC_PERIOD {
+			display		"Real-time clock period"
+			flavor		data
+			calculated	((CYGNUM_HAL_ARM_S3C2440X_APB_CLOCK/CYGNUM_HAL_ARM_S3C2440X_TIMER_PRESCALE/2)/CYGNUM_HAL_RTC_DENOMINATOR)
+			description	"
+				Assuming 1/2 post prescale divider."
+		}
+	}
+
+	cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_BAUD {
+		display		"Diagnostic serial port baud rate"
+		flavor		data
+		legal_values	9600 19200 38400 57600 115200
+		default_value	38400
+		description	"
+			This option selects the baud rate used for the diagnostic port.
+			Note: this should match the value chosen for the GDB port if the 
+			diagnostic and GDB port are the same."
+	}
+
+	cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL_BAUD {
+		display		"GDB serial port baud rate"
+		flavor		data
+		legal_values	9600 19200 38400 57600 115200
+		default_value	38400
+		description	"
+			This option selects the baud rate used for the diagnostic port.
+			Note: this should match the value chosen for the GDB port if the 
+			diagnostic and GDB port are the same."
+	}
+
+	cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS {
+		display		"Number of communication channels on the board"
+		flavor		data
+		calculated	3
+	}
+
+	cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_DEFAULT {
+		display		"Default console channel."
+		flavor		data
+		legal_values	0 to CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS-1
+		calculated	0
+	}
+
+	cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL {
+		display		"Debug serial port"
+		active_if	CYGPRI_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL_CONFIGURABLE
+		flavor		data
+		legal_values	0 to CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS-1
+		default_value	0
+		description	"
+			The MINI2440 boards have three serial ports. This option 
+			chooses which port will be used to connect to a host
+			running GDB."
+	}
+
+	cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL {
+		display		"Diagnostic serial port"
+		active_if	CYGPRI_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_CONFIGURABLE
+		flavor		data
+		legal_values	0 to CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS-1
+		default_value	CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_DEFAULT
+		description	"
+			The MINI2440 boards have three serial ports. This option 
+			chooses which port will be used for diagnostic output."
+	}
+}
+
