@@ -49,32 +49,36 @@
 
 cdl_package CYGPKG_DEVS_FLASH_ARM_MINI2440 {
 	display		"FriendlyARM MINI2440 FLASH memory support"
-    description   "FLASH memory device support for FriendlyARM S3c2440x based
-                   development boards"
-
 	parent		CYGPKG_IO_FLASH
 	active_if	CYGPKG_IO_FLASH
 	requires	CYGPKG_HAL_ARM_ARM9_MINI2440
-    requires      CYGHWR_IO_FLASH_DEVICE
 
-    compile       -library=libextras.a mini2440_flash.c
+	compile		mini2440_flash.c
 
 	# Arguably this should do in the generic package
 	# but then there is a logic loop so you can never enable it.
 	cdl_option CYGINT_DEVS_FLASH_SST_39VFXXX_REQUIRED {
-        display   "FriendlyARM MINI2440 has SST39VF1601 FLASH part fitted"
-		default_value 0
+		display		"FriendlyARM MINI2440 has SST39VF1601 flash part fitted"
+		default_value	0
 		requires	!CYGINT_DEVS_FLASH_AMD_AM29XXXXX_REQUIRED
-        description   "This option enables the driver for SST39VF1601 FLASH"
+		description	"This option enables the driver for SST39VF1601 flash"
+
+		define_proc {
+			puts $::cdl_header "/***** package proc output start *****/"
+			puts $::cdl_header "#define CYGPKG_DEVS_FLASH_SST_39VF1601"
+			puts $::cdl_header "/***** package proc output end *****/"
+		}
 	}
 
 	cdl_option CYGINT_DEVS_FLASH_AMD_AM29XXXXX_REQUIRED {
-        display   "FriendlyARM MINI2440 has Am29LV160 FLASH part fitted"
-		default_value 0
+		display		"FriendlyARM MINI2440 has AM29LV160 flash part fitted"
+		default_value	0
 		requires	!CYGINT_DEVS_FLASH_SST_39VFXXX_REQUIRED
-        description   "this option enables the driver for AMD AM29LV160 FLASH"
-    }      
+		description	"This option enables the driver for AMD AM29LV160D flash"
 
+		requires	CYGHWR_DEVS_FLASH_AMD_AM29LV160
+	}
 }
 
+# ----------------------------------------------------------------------------
 # EOF flash_mini2440.cdl

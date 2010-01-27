@@ -58,10 +58,14 @@
 #define CYGNUM_FLASH_INTERLEAVE		(1)
 #define CYGNUM_FLASH_SERIES		(1)
 #define CYGNUM_FLASH_WIDTH		(16)
-#define CYGNUM_FLASH_BASE		S3C2440X_FLASH_VIRT_BASE
+#define CYGNUM_FLASH_BASE		MINI2440_FLASH_VIRT_BASE
 
 //--------------------------------------------------------------------------
-// Now include the driver code.
+// Platform specific extras
+#define CYGPKG_DEVS_FLASH_SST_39VF1601
+
+//--------------------------------------------------------------------------
+// Now include the driver code
 #ifdef CYGINT_DEVS_FLASH_SST_39VFXXX_REQUIRED
 #include "cyg/io/flash_sst_39vfxxx.inl"
 
@@ -84,6 +88,7 @@ CYG_FLASH_DRIVER(
 #ifdef CYGINT_DEVS_FLASH_AMD_AM29XXXXX_REQUIRED
 #include "cyg/io/flash_am29xxxxx.inl"
 #endif
+// ------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------
 // EOF mini2440_flash.c

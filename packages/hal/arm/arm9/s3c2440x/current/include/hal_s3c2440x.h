@@ -190,7 +190,7 @@
 #define CLKCON			0x4c00000c	//Clock generator control
 #define CLKSLOW			0x4c000010	//Slow clock control
 #define CLKDIVN			0x4c000014	//Clock divider control
-
+#define CAMDIVN    0x4c000018  //Camera clock divider
 
 // LCD CONTROLLER
 #define LCDCON1			0x4d000000	//LCD control 1

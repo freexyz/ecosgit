@@ -59,7 +59,7 @@
 #include CYGHWR_MEMORY_LAYOUT_H
 #include <cyg/hal/hal_mmu.h>		// MMU definitions
 #include <cyg/hal/mini2440.h>		// board specific memory configuration
-
+#include <cyg/hal/hal_s3c2440x.h>
 
 // S3C2440: Mpll = (2*m * Fin) / (p * 2^s), UPLL = (m * Fin) / (p * 2^s)
 // m = M (the value for divider M) + 8
@@ -87,11 +87,11 @@
 // We need this here - can't rely on a translation table until MMU has
 // been initialized
 #define	CYGHWR_LED_MACRO \
-	ldr	r0, =GPFDAT \
-	ldr	r1, [r0] \
-	bic	r1, r1, #(0xf<<4) \
-	orr	r1, r1, #((0xf&~(\x))<<4) \
-	str	r1, [r0] \
+	ldr	r0, =GPFDAT; \
+	ldr	r1, [r0]; \
+	bic	r1, r1, #(0xf<<4); \
+	orr	r1, r1, #((0xf&~(\x))<<4); \
+	str	r1, [r0]; 
 
 	.macro RAW_LED_MACRO x
 	CYGHWR_LED_MACRO

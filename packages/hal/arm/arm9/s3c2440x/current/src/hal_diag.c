@@ -85,10 +85,67 @@ static channel_data_t	ser_channels[2] = {
 
 
 //-----------------------------------------------------------------------------
+#define CFG_SYS_CLK_FREQ 12000000
+static cyg_uint32
+cyg_hal_plf_get_PLLCLK(void)
+{
+    cyg_uint32 r, m, p, s;
+
+    r = __READ_UINT32(MPLLCON);
+    m = ((r & 0xFF000) >> 12) + 8;
+    p = ((r & 0x003F0) >> 4) + 2;
+    s = r & 0x3;
+
+    return ((CFG_SYS_CLK_FREQ * m * 2) / (p << s));	/* S3C2440 */
+}
+static cyg_uint32
+cyg_hal_plf_get_HCLK(void)
+{
+    switch ((__READ_UINT32(CLKDIVN) & 0x6) >> 1) {
+    case 0x0:
+        return cyg_hal_plf_get_PLLCLK();
+    case 0x1:
+        return (cyg_hal_plf_get_PLLCLK() / 2);
+    case 0x2:
+        return ((__READ_UINT32(CAMDIVN) & 0x200) ? (cyg_hal_plf_get_PLLCLK() / 8) :
+                                                   (cyg_hal_plf_get_PLLCLK() / 4));
+    case 0x3:
+        return ((__READ_UINT32(CAMDIVN) & 0x100) ? (cyg_hal_plf_get_PLLCLK() / 6) :
+                                                   (cyg_hal_plf_get_PLLCLK() / 3));
+    default:
+        return 0;
+    }
+}
+static cyg_uint32
+cyg_hal_plf_get_PCLK(void)
+{
+	return ((__READ_UINT32(CLKDIVN) & 0x1) ? (cyg_hal_plf_get_HCLK() / 2) :
+                                                  cyg_hal_plf_get_HCLK());
+}
+
 static void
 cyg_hal_plf_serial_init_channel(void *__ch_data)
 {
 	cyg_uint32	base = ((channel_data_t *) __ch_data)->base;
+
+#if 0 /* ADDED_BY_SEIKI */
+    {
+        unsigned int gpio_data = 0x0;
+        unsigned long i;
+
+        HAL_WRITE_UINT32(GPBCON, 0x155554);
+        HAL_WRITE_UINT32(GPBDAT, ~gpio_data);
+        //HAL_DELAY_US(1000000);
+
+        gpio_data = 0x6;
+        for (i = 0; i < 5; i++) {
+        //while (1) {
+            HAL_DELAY_US(200000);
+            HAL_WRITE_UINT32(GPBDAT, (~gpio_data)<<5);
+            gpio_data = ~gpio_data; 
+        }
+    }
+#endif /* ADDED_BY_SEIKI */
 
 	// UART FIFO control register
 	HAL_WRITE_UINT32(base+OFS_UFCON, (3<<6) | (3<<4) | (1<<2) | (1<<1) | (1<<0));
@@ -101,9 +158,11 @@ cyg_hal_plf_serial_init_channel(void *__ch_data)
 
 	// UART control register
 	HAL_WRITE_UINT32(base+OFS_UCON, 0x245);
-
+    
 	// UART baud divider register
-	HAL_WRITE_UINT32(base+OFS_UBRDIV, (cyg_uint32)((FCLK/4)/16./CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_BAUD+0.5) - 1);
+	//HAL_WRITE_UINT32(base+OFS_UBRDIV, (cyg_uint32)((FCLK/8)/16./CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_BAUD) - 1);  
+    HAL_WRITE_UINT32(base+OFS_UBRDIV,  (cyg_uint32)((cyg_hal_plf_get_PCLK())/16./CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_BAUD) -1);
+	
 }
 
 static void

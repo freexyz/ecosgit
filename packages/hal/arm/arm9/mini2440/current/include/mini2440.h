@@ -56,11 +56,11 @@
 // GCS6 32bit(64MB) SDRAM(0x3000_0000-0x33ff_ffff)
 
 // Memory layout details needed by conversion macro
-#define S3C2440X_SDRAM_PHYS_BASE         0x30000000
-#define S3C2440X_SDRAM_VIRT_BASE         0x00000000
+#define MINI2440_SDRAM_PHYS_BASE         0x30000000
+#define MINI2440_SDRAM_VIRT_BASE         0x00000000
 
-#define S3C2440X_FLASH_PHYS_BASE         0x00000000
-#define S3C2440X_FLASH_VIRT_BASE         0x80000000
+#define MINI2440_FLASH_PHYS_BASE         0x00000000
+#define MINI2440_FLASH_VIRT_BASE         0x80000000
 
 
 // BWSCON

@@ -137,7 +137,7 @@ cdl_package CYGPKG_HAL_ARM_ARM9_S3C2440X {
 		display		"Diagnostic serial port baud rate"
 		flavor		data
 		legal_values	9600 19200 38400 57600 115200
-		default_value	38400
+		default_value	115200
 		description	"
 			This option selects the baud rate used for the diagnostic port.
 			Note: this should match the value chosen for the GDB port if the 
@@ -148,7 +148,7 @@ cdl_package CYGPKG_HAL_ARM_ARM9_S3C2440X {
 		display		"GDB serial port baud rate"
 		flavor		data
 		legal_values	9600 19200 38400 57600 115200
-		default_value	38400
+		default_value	115200
 		description	"
 			This option selects the baud rate used for the diagnostic port.
 			Note: this should match the value chosen for the GDB port if the 

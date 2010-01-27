@@ -48,7 +48,7 @@
 // #                that save and restore state for both exceptions and
 // #                interrupts.
 // #
-// #####DESCRIPTIONEND####
+// #####DESCRIPTIONEND#### 
 // #
 // #========================================================================
 
@@ -60,7 +60,9 @@
 # undef CYGFUN_HAL_COMMON_KERNEL_SUPPORT
 # undef CYGIMP_HAL_COMMON_INTERRUPTS_USE_INTERRUPT_STACK
 #endif
+#include <cyg/hal/hal_s3c2440x.h>
 #include <cyg/hal/hal_platform_setup.h>
+#include <cyg/hal/mini2440.h>
 
 #ifdef CYGDBG_HAL_DEBUG_GDB_INCLUDE_STUBS
 // The CDL should enforce this

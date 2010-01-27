@@ -969,7 +969,7 @@ cdl_package CYGPKG_REDBOOT {
             cdl_option CYGNUM_REDBOOT_FLASH_CONFIG_SIZE {
                 display       "Length of configuration data in FLASH"
                 flavor        data
-                default_value 4096
+                default_value 2048
                 description "
                   This option is used to control the amount of memory and FLASH
                   to be used for configuration options (persistent storage)."

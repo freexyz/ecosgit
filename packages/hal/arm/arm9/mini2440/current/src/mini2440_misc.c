@@ -74,7 +74,7 @@
 
 void hal_mmu_init(void)
 {
-	unsigned long	ttb_base = S3C2440X_SDRAM_PHYS_BASE + 0x4000;
+	unsigned long	ttb_base = MINI2440_SDRAM_PHYS_BASE + 0x4000;
 	unsigned long	i;
 
 	// Set the TTB register
