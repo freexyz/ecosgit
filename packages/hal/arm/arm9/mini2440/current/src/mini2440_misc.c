@@ -107,6 +107,7 @@ void hal_mmu_init(void)
 	X_ARM_MMU_SECTION(0x400,  0x400,     1,  _CACHED,      _BUF,      _RWRW);	// SRAM
 	X_ARM_MMU_SECTION(0x480,  0x480,   512,  _UNCACHED,    _NOBUF,    _RWRW);	// SFRs
 	X_ARM_MMU_SECTION(0x300,  0x300,    64,  _UNCACHED,    _NOBUF,    _RWRW);	// Raw SDRAM
+	X_ARM_MMU_SECTION(0x200,  0x200,     2,  _UNCACHED,    _NOBUF,    _RWRW);	// nGCS4
 }
 
 //----------------------------------------------------------------------------

@@ -514,25 +514,36 @@ dm9000_init(struct cyg_netdevtab_entry * ndp)
     u16tab[6] &= 0xfe00;
     u16tab[6] |= 6;
 
-#if 0
+
+#if 1   // for morgan test
     eeprom_write(priv, 6, u16tab[6]);
     eeprom_write(priv, 3, u16tab[3]);
+	
+	u16tab[0] = 0x12;
+	u16tab[1] = 0x34;
+	u16tab[2] = 0x56;	
+	eeprom_write(priv, 0, u16tab[0]);
+	eeprom_write(priv, 1, u16tab[1]);
+	eeprom_write(priv, 2, u16tab[2]);
 #endif
 
     eeprom_reload(priv);
-
+#if 0  // morgan
     do {
 	for (i = 0; i < 64; i++)
 	    u16tab[i] = eeprom_read(priv, i);
     } while ((u16tab[0] | u16tab[1] | u16tab[2]) == 0);
-
+	u16tab[0] = 0x12;
+	u16tab[1] = 0x34;
+	u16tab[2] = 0x56;		
+	
     priv->mac_address[0] = u16tab[0];
     priv->mac_address[1] = u16tab[0] >> 8;
     priv->mac_address[2] = u16tab[1];
     priv->mac_address[3] = u16tab[1] >> 8;
     priv->mac_address[4] = u16tab[2];
     priv->mac_address[5] = u16tab[2] >> 8;
-
+#endif
     if (!initialize_nic(priv))
 	return 0;
 
