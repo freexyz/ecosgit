@@ -300,5 +300,25 @@ cdl_package CYGPKG_HAL_ARM_ARM9_MINI2440 {
 			}
 		}
 	}
+
+	cdl_component CYGSEM_MINI2440_LCD_SUPPORT {
+		display        "Support LCD"
+		flavor         bool
+		default_value  1
+		compile        lcd_support.c
+		description    "
+			Enabling this option will enable the use the LCD as a 
+			simple framebuffer, suitable for use with a windowing
+			package."
+
+		cdl_option  CYGOPT_MINI2440_LCD_SHOW_LOGO {
+			display       "show logo"
+			flavor         bool
+			default_value  0
+			description   "
+				Use this option enables the logo is showed
+				on the LCD screen."
+		}
+	}
 }
 

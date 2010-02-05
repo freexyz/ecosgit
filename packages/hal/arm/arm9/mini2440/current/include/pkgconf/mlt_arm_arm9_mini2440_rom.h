@@ -16,6 +16,10 @@
 #define CYGMEM_REGION_rom		(0x80000000)
 #define CYGMEM_REGION_rom_SIZE		(0x4000000)
 #define CYGMEM_REGION_rom_ATTR		(CYGMEM_REGION_ATTR_R)
+#define CYGMEM_REGION_lcd 		(0x800000)
+#define CYGMEM_REGION_lcd_SIZE 		(320*240*2)
+#define CYGMEM_REGION_lcd_ATTR 		(CYGMEM_REGION_ATTR_R | CYGMEM_REGION_ATTR_W)
+
 #ifndef __ASSEMBLER__
 extern char CYG_LABEL_NAME (__heap1) [];
 #endif
