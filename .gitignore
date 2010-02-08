@@ -19,15 +19,12 @@
 *.so.dbg
 *.mod.c
 *.i
-*.lst
 *.symtypes
 *.order
 *.elf
-*.bin
 *.gz
 *.bz2
 *.lzma
-*.patch
 *.gcno
 *.hhc
 *.hhp
@@ -38,6 +35,7 @@
 tags
 TAGS
 !.gitignore
+!.depend
 
 # stgit generated dirs
 patches-*
