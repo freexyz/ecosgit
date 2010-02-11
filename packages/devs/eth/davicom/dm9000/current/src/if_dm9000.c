@@ -466,6 +466,9 @@ static int initialize_nic(struct dm9000 *priv)
 	case 8:
 		diag_printf("100M full duplex ");
 		break;
+	case 15:
+		diag_printf("Auto Negotiation"); 
+		break;
 	default:
 		diag_printf("unknown: %d ", lnk);
 		break;
@@ -894,7 +897,7 @@ dm9000_poll(struct eth_drv_sc *sc)
 	    if (getreg(priv, DM_TRPAL) & 3) {
 		// NIC bug detected. Need to reset.
 		//priv->reset_pending = 1;  //morgan test
-		diag_printf("NIC collision bug detected!\n");
+		//diag_printf("NIC collision bug detected!\n");
 	    }
 
 	    (sc->funs->eth_drv->tx_done)(sc, priv->txkey, 0);

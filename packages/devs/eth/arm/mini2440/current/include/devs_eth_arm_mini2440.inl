@@ -131,8 +131,8 @@ dm9000_sc_array[CYGNUM_DEVS_ETH_DAVICOM_DM9000_DEV_COUNT] = {
 #include <redboot.h>
 #include <flash_config.h>
 
-//#ifdef CYGVAR_DEVS_ETH_DM9000_REDBOOT_HOLDS_ESA_ETH0
-#ifdef CYGSEM_DEVS_ETH_ARM_MINI2440_ETH0_SET_ESA
+#ifdef CYGVAR_DEVS_ETH_DM9000_REDBOOT_HOLDS_ESA_ETH0
+//#ifdef CYGSEM_DEVS_ETH_ARM_MINI2440_ETH0_SET_ESA
 RedBoot_config_option(
 	"Network hardware address [MAC] for eth0",
 	eth0_esa,
