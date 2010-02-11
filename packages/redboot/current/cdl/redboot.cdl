@@ -381,7 +381,7 @@ cdl_package CYGPKG_REDBOOT {
                 display          "Default IP address"
                 flavor           booldata
                 default_value    CYGSEM_REDBOOT_FLASH_CONFIG ? 0 : \
-                                    { "0, 0, 0, 0" }
+                                    { "192, 168, 5, 222" }
                 description      "
                     This IP address is the default used by RedBoot if
                     a BOOTP/DHCP server does not respond. The numbers
@@ -404,7 +404,7 @@ cdl_package CYGPKG_REDBOOT {
                      display           "Default bootp server"
                      flavor            booldata
                      default_value     CYGSEM_REDBOOT_FLASH_CONFIG ? 0 : \
-                                          { "0, 0, 0, 0" }
+                                          { "192, 168, 5, 115" }
                      description       "
                           This IP address is the default server
                           address used by RedBoot if a BOOTP/DHCP
@@ -438,9 +438,9 @@ cdl_package CYGPKG_REDBOOT {
     
                 cdl_component CYGDAT_REDBOOT_DEFAULT_GATEWAY_IP_ADDR {
                     display          "Default gateway IP address"
-                    flavor           booldata
+                    flavor           booldata                   
                     default_value    CYGSEM_REDBOOT_FLASH_CONFIG ? 0 : \
-                                        { "0, 0, 0, 0" }
+                                        { "192, 168, 5, 254" }
                     description      "
                         This IP address is the default used by RedBoot
                         if a BOOTP/DHCP server does not respond. The
