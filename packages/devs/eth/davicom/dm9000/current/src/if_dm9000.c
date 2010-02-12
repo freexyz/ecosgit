@@ -45,6 +45,8 @@
 // Description:  hardware driver for Davicom DM9000 NIC
 // Notes:
 //
+// modify: morgan 
+// date:   2010-02-12
 //####DESCRIPTIONEND####
 //
 //==========================================================================
@@ -428,14 +430,10 @@ static int initialize_nic(struct dm9000 *priv)
 
     init_phy(priv);
 
-	//DM9000_iow(DM9000_NCR, 0x0);	/* only intern phy supported by now */	
-	//putreg(priv, DM_NCR, 0);        /* only intern phy supported by now  */
     putreg(priv, DM_TCR, 0);        /* TX Polling clear */
     putreg(priv, DM_BPTR, 0x3f);    /* Less 3Kb, 200us */
     putreg(priv, DM_FCTR, 0x38);   /* Flow Control : High/Low Water */
     putreg(priv, DM_FCR, 0xff);
-	//putreg(priv, DM_FCR, 0x0);
-   //DM9000_iow(DM9000_FCR, 0x0);	/* SH fixme: This looks strange! Flow Control */	
     putreg(priv, DM_SMCR, 0);      /* Special Mode */
     putreg(priv, DM_NSR, NSR_WAKEST | NSR_TX1END | NSR_TX2END);  /* clear TX status */ // set 0x2c
     putreg(priv, DM_ISR, ISR_ROOS | ISR_ROS | ISR_PTS | ISR_PRS); /* Clear interrupt status */
