@@ -45,6 +45,8 @@
 // Description:  hardware driver for Davicom DM9000 NIC
 // Notes:
 //
+// modify: morgan 
+// date:   2010-02-12
 //####DESCRIPTIONEND####
 //
 //==========================================================================
@@ -232,6 +234,7 @@
 #define PHY_BMCR      0x00
 #define PHY_BMSR      0x01
 #define PHY_ANAR      0x04
+#define PHY_SCSR      0x11         
 
 /* PHY BMCR (Basic Mode Control Register) */
 #define PHY_BMCR_AUTO_NEG_EN    (1 << 12)
@@ -382,7 +385,8 @@ static void init_phy(struct dm9000 *p)
 
     phy_write(p, PHY_ANAR, 0x1e1); // Advertise 10/100 half/full duplex w/CSMA
     phy_write(p, PHY_BMCR, PHY_BMCR_AUTO_NEG_EN | PHY_BMCR_AUTO_NEG_START);
-
+   //phy_write(p, PHY_ANAR, 0x101); // for 100 full duplex 
+   //phy_write(p, PHY_BMCR, 0x3100);
     /* wait for autonegotiation to complete */
     do {
         CYGACC_CALL_IF_DELAY_US(1000);
@@ -399,7 +403,7 @@ static inline void dm9000_reset(struct dm9000 *p)
 
 static int initialize_nic(struct dm9000 *priv)
 {
-    int i;
+    int i,lnk;
 
     dm9000_reset(priv);
 
@@ -426,13 +430,13 @@ static int initialize_nic(struct dm9000 *priv)
 
     init_phy(priv);
 
-    putreg(priv, DM_TCR, 0);
-    putreg(priv, DM_BPTR, 0x3f);
-    putreg(priv, DM_FCTR, 0x38);
+    putreg(priv, DM_TCR, 0);        /* TX Polling clear */
+    putreg(priv, DM_BPTR, 0x3f);    /* Less 3Kb, 200us */
+    putreg(priv, DM_FCTR, 0x38);   /* Flow Control : High/Low Water */
     putreg(priv, DM_FCR, 0xff);
-    putreg(priv, DM_SMCR, 0);
-    putreg(priv, DM_NSR, NSR_WAKEST | NSR_TX1END | NSR_TX2END);
-    putreg(priv, DM_ISR, ISR_ROOS | ISR_ROS | ISR_PTS | ISR_PRS);
+    putreg(priv, DM_SMCR, 0);      /* Special Mode */
+    putreg(priv, DM_NSR, NSR_WAKEST | NSR_TX1END | NSR_TX2END);  /* clear TX status */ // set 0x2c
+    putreg(priv, DM_ISR, ISR_ROOS | ISR_ROS | ISR_PTS | ISR_PRS); /* Clear interrupt status */
     
     // set MAC address
     for (i = 0; i < 6; i++)
@@ -443,6 +447,31 @@ static int initialize_nic(struct dm9000 *priv)
 	putreg(priv, DM_MAR + i, 0x00);
     putreg(priv, DM_MAR + 6, 0x00);
     putreg(priv, DM_MAR + 7, 0x80);
+	
+	/* see what we've got */
+	lnk = phy_read(priv, PHY_SCSR) >> 12;
+	diag_printf("operating at ");
+	switch (lnk) {
+	case 1:
+		diag_printf("10M half duplex ");
+		break;
+	case 2:
+		diag_printf("10M full duplex ");
+		break;
+	case 4:
+		diag_printf("100M half duplex ");
+		break;
+	case 8:
+		diag_printf("100M full duplex ");
+		break;
+	case 15:
+		diag_printf("Auto Negotiation"); 
+		break;
+	default:
+		diag_printf("unknown: %d ", lnk);
+		break;
+	}
+	diag_printf("mode\n");
 
     return 1;
 }
@@ -514,25 +543,36 @@ dm9000_init(struct cyg_netdevtab_entry * ndp)
     u16tab[6] &= 0xfe00;
     u16tab[6] |= 6;
 
-#if 0
+
+#if 1   // for morgan test
     eeprom_write(priv, 6, u16tab[6]);
     eeprom_write(priv, 3, u16tab[3]);
+	
+	u16tab[0] = 0x12;
+	u16tab[1] = 0x34;
+	u16tab[2] = 0x56;	
+	eeprom_write(priv, 0, u16tab[0]);
+	eeprom_write(priv, 1, u16tab[1]);
+	eeprom_write(priv, 2, u16tab[2]);
 #endif
 
     eeprom_reload(priv);
-
+#if 0  // morgan
     do {
 	for (i = 0; i < 64; i++)
 	    u16tab[i] = eeprom_read(priv, i);
     } while ((u16tab[0] | u16tab[1] | u16tab[2]) == 0);
-
+	u16tab[0] = 0x12;
+	u16tab[1] = 0x34;
+	u16tab[2] = 0x56;		
+	
     priv->mac_address[0] = u16tab[0];
     priv->mac_address[1] = u16tab[0] >> 8;
     priv->mac_address[2] = u16tab[1];
     priv->mac_address[3] = u16tab[1] >> 8;
     priv->mac_address[4] = u16tab[2];
     priv->mac_address[5] = u16tab[2] >> 8;
-
+#endif
     if (!initialize_nic(priv))
 	return 0;
 
@@ -854,8 +894,8 @@ dm9000_poll(struct eth_drv_sc *sc)
 
 	    if (getreg(priv, DM_TRPAL) & 3) {
 		// NIC bug detected. Need to reset.
-		priv->reset_pending = 1;
-		diag_printf("NIC collision bug detected!\n");
+		//priv->reset_pending = 1;  //morgan test
+		//diag_printf("NIC collision bug detected!\n");
 	    }
 
 	    (sc->funs->eth_drv->tx_done)(sc, priv->txkey, 0);

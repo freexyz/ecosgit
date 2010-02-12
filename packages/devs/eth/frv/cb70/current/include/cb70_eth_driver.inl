@@ -49,7 +49,6 @@
 #include <cyg/hal/hal_intr.h>           // CYGNUM_HAL_INTERRUPT_ETHERNET
 #include <cyg/hal/hal_cache.h>          // HAL_DCACHE_LINE_SIZE
 #include <cyg/hal/plf_io.h>             // CYGARC_UNCACHED_ADDRESS
-
 extern int cyg_hal_dm9000_present(void);
 
 #define CYG_HAL_DM9000_PRESENT() cyg_hal_dm9000_present()

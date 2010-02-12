@@ -52,7 +52,7 @@
 #include <cyg/hal/hal_intr.h>		// CYGNUM_HAL_INTERRUPT_ETHERNET
 #include <cyg/hal/hal_cache.h>		// HAL_DCACHE_LINE_SIZE
 #include <cyg/hal/plf_io.h>		// CYGARC_UNCACHED_ADDRESS
-
+#include <pkgconf/devs_eth_arm_mini2440.h>  // mini2440 eth define 
 
 extern int	cyg_hal_dm9000_present(void);
 
@@ -62,7 +62,7 @@ extern int	cyg_hal_dm9000_present(void);
 #ifdef CYGPKG_DEVS_ETH_ARM_MINI2440_ETH0
 
 static struct dm9000	dm9000_eth0_priv_data = {
-#if defined(CYGPKG_REDBOOT) && defined(CYGVAR_ETH_DM9000_REDBOOT_HOLDS_ESA_ETH0)
+#ifdef CYGSEM_DEVS_ETH_ARM_MINI2440_ETH0_SET_ESA
 	mac_address: CYGDAT_DEVS_ETH_ARM_MINI2440_ETH0_ESA,
 #endif
 	io_addr: (volatile unsigned char *) 0x20000000,
@@ -132,6 +132,7 @@ dm9000_sc_array[CYGNUM_DEVS_ETH_DAVICOM_DM9000_DEV_COUNT] = {
 #include <flash_config.h>
 
 #ifdef CYGVAR_DEVS_ETH_DM9000_REDBOOT_HOLDS_ESA_ETH0
+//#ifdef CYGSEM_DEVS_ETH_ARM_MINI2440_ETH0_SET_ESA
 RedBoot_config_option(
 	"Network hardware address [MAC] for eth0",
 	eth0_esa,

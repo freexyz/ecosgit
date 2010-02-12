@@ -92,7 +92,7 @@ cdl_package CYGPKG_DEVS_ETH_ARM_MINI2440 {
 		}
 
 		cdl_component CYGSEM_DEVS_ETH_ARM_MINI2440_ETH0_SET_ESA {
-			display		"Set the ethernet station address"
+			display		"RedBoot manages ESA for eth0"
 			flavor		bool
 			default_value	0
 			description	"Enabling this option will allow the ethernet
