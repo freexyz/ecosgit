@@ -1,0 +1,83 @@
+# ====================================================================
+#
+#      i2c_s3c2440x.cdl
+#
+#      eCos Samsung S3C2440x I2C configuration data
+#
+# ====================================================================
+## ####ECOSGPLCOPYRIGHTBEGIN####                                            
+## -------------------------------------------                              
+## This file is part of eCos, the Embedded Configurable Operating System.   
+## Copyright (C) 2010 Free Software Foundation, Inc.                        
+##
+## eCos is free software; you can redistribute it and/or modify it under    
+## the terms of the GNU General Public License as published by the Free     
+## Software Foundation; either version 2 or (at your option) any later      
+## version.                                                                 
+##
+## eCos is distributed in the hope that it will be useful, but WITHOUT      
+## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or    
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License    
+## for more details.                                                        
+##
+## You should have received a copy of the GNU General Public License        
+## along with eCos; if not, write to the Free Software Foundation, Inc.,    
+## 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.            
+##
+## As a special exception, if other files instantiate templates or use      
+## macros or inline functions from this file, or you compile this file      
+## and link it with other works to produce a work based on this file,       
+## this file does not by itself cause the resulting work to be covered by   
+## the GNU General Public License. However the source code for this file    
+## must still be made available in accordance with section (3) of the GNU   
+## General Public License v2.                                               
+##
+## This exception does not invalidate any other reasons why a work based    
+## on this file might be covered by the GNU General Public License.         
+## -------------------------------------------                              
+## ####ECOSGPLCOPYRIGHTEND####                                              
+# ====================================================================
+######DESCRIPTIONBEGIN####
+#
+# Author(s):      shen
+# Contributors:   shen
+# Date:           2010-01-14
+#
+#####DESCRIPTIONEND####
+#
+# ====================================================================
+
+cdl_package CYGPKG_DEVS_I2C_ARM_S3C2440X {
+    display     "I2C driver for S3C2440x family of ARM controllers"
+    
+    parent      CYGPKG_IO_I2C
+    active_if   CYGPKG_IO_I2C
+    active_if   CYGPKG_HAL_ARM_ARM9_S3C2440X
+
+    description " 
+           This package provides a generic I2C device driver for the on-chip
+           I2C peripherals in S3C2440x processors."
+           
+    include_dir cyg/io
+    compile     s3c2440x_i2c.c
+    
+   
+    cdl_option CYGPKG_DEVS_I2C_ARM_S3C2440X_DEBUG_LEVEL {
+         display "Driver debug output level"
+         flavor  data
+         legal_values {0 1}
+         default_value 0
+         description   "
+             This option specifies the level of debug data output by
+             the S3C2440x I2C device driver. A value of 0 signifies
+             no debug data output; 1 signifies normal debug data
+             output. The generic eCos I2C driver functions do not return any 
+             error information if a I2C transfer failed. If this option is
+             1 then the driver prints the status flags if a transfer failed
+             or was aborted. It prints the status flags in case of a missing 
+             data or address acknowledge, in case of lost arbitration and in 
+             case of a bus error. A missing acknowledge does not realy indicate
+             an error and may be part of a normal I2C communication. Therefore
+             this option should only be >0 for debug reasons."         
+    }
+}

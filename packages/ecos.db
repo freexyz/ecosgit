@@ -2420,6 +2420,15 @@ package CYGPKG_DEVS_I2C_ARM_LPC2XXX {
                  controller family."
 }
 
+package CYGPKG_DEVS_I2C_ARM_S3C2440X {
+    alias           { "s3c2440x I2C driver" }
+    hardware
+    directory       devs/i2c/arm/s3c2440x
+    script          i2c_s3c2440x.cdl
+    description "This package provides a driver for the I2C unit of the S3C2440x
+                 controller family."
+}
+
 package CYGPKG_DEVS_ADC_ARM_LPC24XX {
     alias           { "LPC24xx ADC driver" }
     hardware
@@ -6495,6 +6504,8 @@ target mini2440 {
                    CYGPKG_DEVS_FLASH_AMD_AM29XXXXX
                    CYGPKG_DEVS_FLASH_SST_39VFXXX
                    CYGPKG_DEVS_ETH_DAVICOM_DM9000
+		   CYGPKG_IO_I2C
+		   CYGPKG_DEVS_I2C_ARM_S3C2440X  
         }
         description "
             The MINI2440 target provides the packages needed to run eCos on

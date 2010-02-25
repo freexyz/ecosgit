@@ -1,0 +1,9 @@
+2010-01-04  T.C. Chiu <TCChiu@sq.com.tw>
+
+	* cdl/i2c_s3c2440x.cdl:
+
+	* include/s3c2440x_i2c.h:
+
+	* src/s3c2440x_i2c.c:
+	New package. I2C device driver for the Samsung ARM9/S3C2440X on-chip I2C unit
+
